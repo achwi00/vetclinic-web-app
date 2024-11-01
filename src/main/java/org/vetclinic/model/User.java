@@ -1,15 +1,18 @@
 package org.vetclinic.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.antlr.v4.runtime.misc.NotNull;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class User
 {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
@@ -19,11 +22,14 @@ public class User
     private String password;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Role role;
 
-    private enum Role{
+    public enum Role
+    {
         VET("vet"), RECEPTIONIST("receptionist"), ADMIN("admin"), CLIENT("client");
 
         Role(String role){}
+
     }
 }

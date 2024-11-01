@@ -12,17 +12,27 @@ public class Visit
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
+
     private Instant date;
 
     private Instant startTime;
-    //endTime-- maybe for GroupVisit
 
-    private Long petId;//or petGroupId?
+    private Instant endTime;//for group visit mostly
 
-    @Column(nullable = false)
-    private Long clientId;
+    @ManyToOne
+    private User client;
+
+    @ManyToOne
+    private User vet;
+
+    @ManyToOne
+    private BasePet basePet;
+
+//    @ManyToOne
+//    private BasePet petGroupId;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private VisitStatus status;
 
     private enum VisitStatus{
