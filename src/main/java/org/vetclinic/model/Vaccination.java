@@ -12,14 +12,18 @@ public class Vaccination
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long petId;
-    private Long vaccineId;
+
+    @ManyToOne
+    private Medication medication;
 
     @Column(nullable = false)
     private Instant date;
 
     @Column(nullable = false)
     private boolean isMandatory;
+
+    @ManyToOne
+    private BasePet basePet;
 
     @Column(nullable = false)
     private VaccinationStatus vaccinationStatus;
@@ -32,5 +36,7 @@ public class Vaccination
         {
         }
     }
-    //illnessId? List of Illness?
+
+    @Column(nullable = false)
+    private int petsTreated;
 }
