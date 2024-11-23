@@ -2,7 +2,6 @@ package org.vetclinic.service;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.vetclinic.model.User;
 import org.vetclinic.repository.UserRepository;
