@@ -19,6 +19,20 @@ public class UserService
     public List<User> getAllUsers(){
         return userRepository.findAll();
     }
+
+    public User getUserByEmail(String email){
+        User user = null;
+        try{
+            Optional<User> optionalUser = userRepository.findUserByEmail(email);
+            if(optionalUser.isPresent()){
+                user = optionalUser.get();
+            }
+        }catch (Exception e){
+            log.info("User not found for mail" + email);
+        }
+        return user;
+    }
+
     public String getUserRole(String email){
         User user;
         String role = null;
@@ -33,4 +47,5 @@ public class UserService
         }
        return role;
     }
+
 }
