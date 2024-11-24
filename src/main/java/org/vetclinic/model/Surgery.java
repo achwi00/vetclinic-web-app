@@ -13,6 +13,9 @@ public class Surgery
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    private Visit visit;
+
     private String description;
 
     @ManyToOne

@@ -18,14 +18,14 @@ public class Treatment
     private Long id;
 
     @ManyToOne
-    private BasePet pet;//id of the pet treated
+    private BasePet pet;
 
     @Column(nullable = false)
     private Instant startDate;
     private Instant endDate;
 
-    //
-    //private Long medicationId;//id of the Medication
+    @ManyToOne
+    private Medication medication;
 
     @Column(nullable = false)
     private String description;

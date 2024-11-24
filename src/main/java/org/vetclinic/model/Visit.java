@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity
 @Data
@@ -13,11 +15,13 @@ public class Visit
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
-    private Instant date;
+    @Column(nullable = false)
+    private LocalDate date;
 
-    private Instant startTime;
+    @Column(nullable = false)
+    private LocalTime startTime;
 
-    private Instant endTime;//for group visit mostly
+    private LocalTime endTime;//for group visit mostly
 
     @ManyToOne
     private User client;
@@ -27,9 +31,6 @@ public class Visit
 
     @ManyToOne
     private BasePet basePet;
-
-//    @ManyToOne
-//    private BasePet petGroupId;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

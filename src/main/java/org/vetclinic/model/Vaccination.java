@@ -16,6 +16,9 @@ public class Vaccination
     @ManyToOne
     private Medication medication;
 
+    @ManyToOne
+    private Visit visit;
+
     @Column(nullable = false)
     private Instant date;
 
@@ -39,4 +42,5 @@ public class Vaccination
 
     @Column(nullable = false)
     private int petsTreated;
+
 }
