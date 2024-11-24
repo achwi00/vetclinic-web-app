@@ -7,6 +7,7 @@ import org.vetclinic.model.User;
 import org.vetclinic.model.Visit;
 import org.vetclinic.repository.VisitRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -17,8 +18,8 @@ public class VisitService
     private final VisitRepository visitRepository;
     private UserService userService;
 
-    public List<Visit> findAllVisitsInBetween(){
-        return List.of();
+    public List<Visit> findAllVisitsInBetween(LocalDate startDate, LocalDate endDate){
+        return visitRepository.findAllByDateBetween(startDate, endDate);
     }
 
 }
