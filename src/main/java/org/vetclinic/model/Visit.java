@@ -36,7 +36,7 @@ public class Visit
     @Column(nullable = false)
     private VisitStatus status;
 
-    private enum VisitStatus{
+    public enum VisitStatus{
         FREE("free"), PENDING("pending"), UPCOMING("upcoming"), CANCELLED("cancelled"), OUTDATED("outdated");
 
         VisitStatus(String status){}

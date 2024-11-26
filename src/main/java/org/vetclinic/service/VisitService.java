@@ -19,7 +19,7 @@ public class VisitService
     private UserService userService;
 
     public List<Visit> findAllVisitsInBetween(LocalDate startDate, LocalDate endDate){
-        return visitRepository.findAllByDateBetween(startDate, endDate);
+        return visitRepository.findAllByDateBetweenAndStatus(startDate, endDate, Visit.VisitStatus.FREE);
     }
 
 }

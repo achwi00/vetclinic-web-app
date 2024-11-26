@@ -23,5 +23,5 @@ public class VisitController
     @GetMapping("/in-between")
     public List<Visit> getAllPetGroupsForUser(@RequestParam LocalDate startDate, @RequestParam LocalDate endDate){
         return visitService.findAllVisitsInBetween(startDate, endDate);
-    }
+    }//check dates validation
 }
