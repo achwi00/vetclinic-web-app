@@ -24,7 +24,10 @@ public class VisitController
     }//check dates validation
 
     @PostMapping("book-visit")
-    public void newVisitForPet(@RequestBody BookVisitRequest request){
+    public String newVisitForPet(@RequestBody BookVisitRequest request){
+        log.info("visitId and email" + request.getVisitId() + request.getEmail());
+        log.info("petName: " + request.getPetName());
         visitService.bookVisit(request.getVisitId(), request.getEmail(), request.getPetName());
+        return "Successfully booked";
     }
 }
