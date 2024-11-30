@@ -5,8 +5,8 @@ package org.vetclinic.service;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
-import org.vetclinic.model.User;
-import org.vetclinic.repository.UserRepository;
+import org.vetclinic.domain.model.User;
+import org.vetclinic.domain.repository.UserRepository;
 
 
 @Service

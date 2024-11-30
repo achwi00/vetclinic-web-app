@@ -1,9 +1,8 @@
-package org.vetclinic.model;
+package org.vetclinic.domain.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
 

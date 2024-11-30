@@ -1,10 +1,7 @@
-package org.vetclinic.repository;
+package org.vetclinic.domain.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.vetclinic.model.BasePet;
-import org.vetclinic.model.User;
-import org.vetclinic.model.Visit;
+import org.vetclinic.domain.model.Visit;
 
 import java.time.LocalDate;
 import java.util.List;

@@ -3,8 +3,8 @@ package org.vetclinic.service;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.vetclinic.model.User;
-import org.vetclinic.repository.UserRepository;
+import org.vetclinic.domain.model.User;
+import org.vetclinic.domain.repository.UserRepository;
 
 import java.util.List;
 import java.util.Optional;

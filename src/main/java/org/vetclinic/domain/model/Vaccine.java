@@ -1,4 +1,4 @@
-package org.vetclinic.model;
+package org.vetclinic.domain.model;
 
 public class Vaccine
 {

@@ -1,7 +1,7 @@
-package org.vetclinic.repository;
+package org.vetclinic.domain.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.vetclinic.model.User;
+import org.vetclinic.domain.model.User;
 
 import java.util.List;
 import java.util.Optional;

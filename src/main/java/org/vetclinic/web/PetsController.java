@@ -5,8 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.vetclinic.model.Pet;
-import org.vetclinic.model.PetGroup;
+import org.vetclinic.domain.model.Pet;
+import org.vetclinic.domain.model.PetGroup;
 import org.vetclinic.service.PetGroupService;
 import org.vetclinic.service.PetService;
 

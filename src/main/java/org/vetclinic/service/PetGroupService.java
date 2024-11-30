@@ -3,9 +3,9 @@ package org.vetclinic.service;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.vetclinic.model.PetGroup;
-import org.vetclinic.model.User;
-import org.vetclinic.repository.PetGroupRepository;
+import org.vetclinic.domain.model.PetGroup;
+import org.vetclinic.domain.model.User;
+import org.vetclinic.domain.repository.PetGroupRepository;
 import java.util.List;
 
 @Service

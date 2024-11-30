@@ -2,11 +2,9 @@ package org.vetclinic.web;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.vetclinic.model.Visit;
+import org.springframework.web.bind.annotation.*;
+import org.vetclinic.api.dto.BookVisitRequest;
+import org.vetclinic.domain.model.Visit;
 import org.vetclinic.service.VisitService;
 
 import java.time.LocalDate;
@@ -24,4 +22,9 @@ public class VisitController
     public List<Visit> getAllPetGroupsForUser(@RequestParam LocalDate startDate, @RequestParam LocalDate endDate){
         return visitService.findAllVisitsInBetween(startDate, endDate);
     }//check dates validation
+
+    @PostMapping("book-visit")
+    public void newVisitForPet(@RequestBody BookVisitRequest request){
+        visitService.bookVisit(request.getVisitId(), request.getEmail(), request.getPetName());
+    }
 }

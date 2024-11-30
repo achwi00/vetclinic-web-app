@@ -1,15 +1,17 @@
-package org.vetclinic.repository;
+package org.vetclinic.domain.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import org.vetclinic.model.Pet;
-import org.vetclinic.model.User;
+import org.vetclinic.domain.model.Pet;
+import org.vetclinic.domain.model.User;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface PetRepository extends JpaRepository<Pet, Long>
 {
     List<Pet> findAllByOwner(@Param("owner") User owner);
+    Optional<Pet> findPetByOwnerAndName(User owner, String name);
 }
