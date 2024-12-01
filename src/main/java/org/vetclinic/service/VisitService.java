@@ -29,6 +29,9 @@ public class VisitService
             //look for owner and pet based on arguments
             User owner = userService.getUserByEmail(email);
             Pet pet = petService.getPetByOwnerAndName(owner, petName);
+            if(pet == null || owner == null){
+                throw new IllegalArgumentException("Pet or owner id not provided");
+            }
             //look for visit and ensure bookable status
             Visit visit = visitRepository.findById(visitId)
                     .orElseThrow(() -> new IllegalArgumentException("Visit not found with ID: " + visitId));

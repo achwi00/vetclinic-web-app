@@ -25,9 +25,12 @@ public class VisitController
 
     @PostMapping("book-visit")
     public String newVisitForPet(@RequestBody BookVisitRequest request){
-        log.info("visitId and email" + request.getVisitId() + request.getEmail());
-        log.info("petName: " + request.getPetName());
-        visitService.bookVisit(request.getVisitId(), request.getEmail(), request.getPetName());
-        return "Successfully booked";
+        String msg = "Successfully booked";
+//        log.info("visitId and email" + request.getVisitId() + request.getEmail());
+//        log.info("petName: " + request.getPetName());
+        if(!visitService.bookVisit(request.getVisitId(), request.getEmail(), request.getPetName())){
+            msg = "Error booking visit";
+        }
+        return msg;
     }
 }
