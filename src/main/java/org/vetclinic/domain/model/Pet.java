@@ -11,10 +11,19 @@ import java.time.Instant;
 @NoArgsConstructor
 public class Pet extends BasePet{
 
-    public Pet(String name, Type type, String breed, Instant birthDate, User owner){
+    public Pet(String name, Type type, String breed, Instant birthDate, User owner, Sex sex){
         super(name, type, breed, owner);
         this.birthDate = birthDate;
+        this.sex = sex;
     }
     private Instant birthDate;
 
+    public enum Sex{
+        MALE("male"), FEMALE("female"), UNKNOWN("unknown");
+
+        Sex(String sex){}
+    }
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Sex sex;
 }
