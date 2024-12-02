@@ -16,7 +16,7 @@ public class PetGroupService
     private PetGroupRepository petGroupRepository;
     private UserService userService;
 
-    public List<PetGroup> getPetsForUser(String email){
+    public List<PetGroup> getPetGroupsForUser(String email){
         try{
             User owner = userService.getUserByEmail(email);
             if(owner != null) {

@@ -1,12 +1,15 @@
 package org.vetclinic.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.vetclinic.domain.model.BasePet;
 import org.vetclinic.domain.model.Pet;
 import org.vetclinic.domain.model.User;
 import org.vetclinic.domain.repository.PetRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,5 +44,40 @@ public class PetService
             log.info("Pet not found for provided user and name.");
         }
         return pet;
+    }
+
+    public boolean createNewPet(String email, String petName, String breed, String typeStr, LocalDate birthDate, String sexStr){
+        try{
+            //check if user exists by email
+            User user = userService.getUserByEmail(email);
+            if(user == null){
+                throw new IllegalArgumentException("User not found for email: " + email);
+            }
+            if(!isNameValid(user, petName)){
+                throw new IllegalArgumentException("User already owns a pet with this name: " + petName);
+            }
+            //validate sex and type
+            Pet.Sex sex = parseEnumValue(sexStr, Pet.Sex.class, "Invalid sex value: " + sexStr);
+            Pet.Type type = parseEnumValue(typeStr, Pet.Type.class, "Invalid type value: " + typeStr);
+
+            //save pet
+            petRepository.save(new Pet(petName, type, breed, birthDate, user, sex));
+            return true;
+        }catch(Exception e){
+            log.info("Error saving pet: " + e.getMessage());
+            return false;
+        }
+    }
+
+    private <E extends Enum<E>> E parseEnumValue(String value, Class<E> enumType, String errorMessage) {
+        try {
+            return Enum.valueOf(enumType, value.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(errorMessage);
+        }
+    }
+
+    public boolean isNameValid(User owner, String name){
+        return !petRepository.existsByOwnerAndName(owner, name);
     }
 }
