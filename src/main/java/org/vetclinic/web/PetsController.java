@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.vetclinic.api.dto.BookVisitRequest;
 import org.vetclinic.api.dto.PetRequest;
 import org.vetclinic.domain.model.Pet;
 import org.vetclinic.domain.model.PetGroup;
@@ -33,7 +32,7 @@ public class PetsController
     }
 
     @PostMapping("/new-pet")
-    public ResponseEntity<String> newVisitForPet(@RequestBody PetRequest request){
+    public ResponseEntity<String> addNewPet(@RequestBody PetRequest request){
         boolean success = petService.createNewPet(
                 request.getEmail(),
                 request.getPetName(),
@@ -49,5 +48,20 @@ public class PetsController
         }
     }
 
+    @PostMapping("/new-pet-group")
+    public ResponseEntity<String> addNewPetGroup(@RequestBody PetRequest request){
+        boolean success = petGroupService.createNewPetGroup(
+                request.getEmail(),
+                request.getPetName(),
+                request.getBreed(),
+                request.getType(),
+                request.getSize()
+        );
+        if (success) {
+            return ResponseEntity.ok("Pet group created successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to create pet group");
+        }
+    }
 
 }

@@ -1,10 +1,8 @@
 package org.vetclinic.service;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.vetclinic.domain.model.BasePet;
 import org.vetclinic.domain.model.Pet;
 import org.vetclinic.domain.model.User;
 import org.vetclinic.domain.repository.PetRepository;
@@ -69,7 +67,7 @@ public class PetService
         }
     }
 
-    private <E extends Enum<E>> E parseEnumValue(String value, Class<E> enumType, String errorMessage) {
+    protected static <E extends Enum<E>> E parseEnumValue(String value, Class<E> enumType, String errorMessage) {
         try {
             return Enum.valueOf(enumType, value.toUpperCase());
         } catch (IllegalArgumentException e) {
@@ -77,7 +75,7 @@ public class PetService
         }
     }
 
-    public boolean isNameValid(User owner, String name){
+    private boolean isNameValid(User owner, String name){
         return !petRepository.existsByOwnerAndName(owner, name);
     }
 }

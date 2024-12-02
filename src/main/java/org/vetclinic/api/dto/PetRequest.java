@@ -15,4 +15,5 @@ public class PetRequest
     private String type;
     private LocalDate birthDate;
     private String sex;
+    private int size;
 }

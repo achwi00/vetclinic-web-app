@@ -12,4 +12,5 @@ import java.util.List;
 public interface PetGroupRepository extends JpaRepository<PetGroup, Long>
 {
     List<PetGroup> findAllByOwner(@Param("owner") User owner);
+    boolean existsByOwnerAndName(User owner, String name);
 }

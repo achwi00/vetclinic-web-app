@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PetGroup extends BasePet{
 
-    PetGroup(String name, Type type, String breed, int size, User owner){
+    public PetGroup(String name, Type type, String breed, int size, User owner){
         super(name, type, breed, owner);
         this.size = size;
     }
