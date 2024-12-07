@@ -1,5 +1,6 @@
 package org.vetclinic.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,19 @@ public class VisitService
 
     public List<Visit> findAllVisitsInBetween(LocalDate startDate, LocalDate endDate){
         return visitRepository.findAllByDateBetweenAndStatus(startDate, endDate, Visit.VisitStatus.FREE);
+    }
+
+    public List<Visit> findAllVisitsInStatusForClient(String email, Visit.VisitStatus status){
+        try{
+            User client = userService.getUserByEmail(email);
+            if(client == null){
+                throw new EntityNotFoundException("Client not found for email");
+            }
+            return visitRepository.findAllByClientAndStatus(client, status);
+        }catch (Exception e){
+            log.info("Exception during findAllVisitsInStatusForClient: " + e.getMessage());
+            return List.of();
+        }
     }
 
     public boolean bookVisit(Long visitId, String email, String petName){

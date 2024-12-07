@@ -23,6 +23,16 @@ public class VisitController
         return visitService.findAllVisitsInBetween(startDate, endDate);
     }//check dates validation
 
+    @GetMapping("/upcoming")
+    public List<Visit> getAllUpcomingVisitsForUser(@RequestParam String email){
+        return visitService.findAllVisitsInStatusForClient(email, Visit.VisitStatus.UPCOMING);
+    }
+
+    @GetMapping("/completed")
+    public List<Visit> getAllCompletedVisitsForUser(@RequestParam String email){
+        return visitService.findAllVisitsInStatusForClient(email, Visit.VisitStatus.COMPLETED);
+    }
+
     @PostMapping("book-visit")
     public String newVisitForPet(@RequestBody BookVisitRequest request){
         String msg = "Successfully booked";

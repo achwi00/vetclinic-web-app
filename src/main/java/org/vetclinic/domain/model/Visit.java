@@ -36,7 +36,7 @@ public class Visit
     private VisitStatus status;
 
     public enum VisitStatus{
-        FREE("free"), PENDING("pending"), UPCOMING("upcoming"), CANCELLED("cancelled"), OUTDATED("outdated");
+        FREE("free"), PENDING("pending"), UPCOMING("upcoming"), CANCELLED("cancelled"), OUTDATED("outdated"), COMPLETED("completed");
 
         VisitStatus(String status){}
     }
