@@ -32,6 +32,15 @@ public class VisitController
     public List<Visit> getAllCompletedVisitsForUser(@RequestParam String email){
         return visitService.findAllVisitsInStatusForClient(email, Visit.VisitStatus.COMPLETED);
     }
+    @GetMapping("/cancel-visit")
+    public String cancelVisit(@RequestParam Long visitId){
+        log.info("visitId: " + visitId);
+        String msg = "Successfully cancelled";
+        if(!visitService.cancelVisit(visitId)){
+            msg = "Error cancelling visit";
+        }
+        return msg;
+    }
 
     @PostMapping("book-visit")
     public String newVisitForPet(@RequestBody BookVisitRequest request){

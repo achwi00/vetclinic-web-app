@@ -66,4 +66,18 @@ public class VisitService
         }
     }
 
+    public boolean cancelVisit(Long visitId){
+        try{
+            Visit visit = visitRepository.findById(visitId)
+                    .orElseThrow(() -> new IllegalArgumentException("Visit not found with ID: " + visitId));
+            visit.setClient(null);
+            visit.setBasePet(null);
+            visit.setStatus(Visit.VisitStatus.FREE);
+            visitRepository.save(visit);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
 }
