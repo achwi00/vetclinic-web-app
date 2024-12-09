@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.Instant;
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -20,7 +21,7 @@ public class Vaccination
     private Visit visit;
 
     @Column(nullable = false)
-    private Instant date;
+    private LocalDate date;
 
     @Column(nullable = false)
     private boolean isMandatory;
@@ -28,10 +29,11 @@ public class Vaccination
     @ManyToOne
     private BasePet basePet;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private VaccinationStatus vaccinationStatus;
 
-    private enum VaccinationStatus
+    public enum VaccinationStatus
     {
         UPCOMING("upcoming"), DONE("done"), OVERDUE("overdue");
 
