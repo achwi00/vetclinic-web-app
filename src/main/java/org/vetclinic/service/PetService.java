@@ -1,8 +1,10 @@
 package org.vetclinic.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.vetclinic.domain.model.BasePet;
 import org.vetclinic.domain.model.Pet;
 import org.vetclinic.domain.model.User;
 import org.vetclinic.domain.repository.PetRepository;
@@ -17,6 +19,7 @@ import java.util.Optional;
 public class PetService
 {
     private PetRepository petRepository;
+    private PetGroupService petGroupService;
     private UserService userService;
 
     public List<Pet> getPetsForUser(String email){
@@ -42,6 +45,24 @@ public class PetService
             log.info("Pet not found for provided user and name.");
         }
         return pet;
+    }
+
+    public BasePet getBasePetByOwnerAndName(String email, String name){
+        try{
+            User owner = userService.getUserByEmail(email);
+            if(owner == null){
+                throw new EntityNotFoundException("User " + email + " not found");
+            }
+            BasePet basePet;
+            basePet = getPetByOwnerAndName(owner, name);
+            if(basePet == null){
+                basePet = petGroupService.getPetGroupByOwnerAndName(owner, name);
+            }
+            return basePet;
+        }catch(Exception e){
+            log.info("Error getting BasePet for user and name");
+            return null;
+        }
     }
 
     public boolean createNewPet(String email, String petName, String breed, String typeStr, LocalDate birthDate, String sexStr){

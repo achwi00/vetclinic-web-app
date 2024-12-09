@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.vetclinic.api.dto.PetRequest;
+import org.vetclinic.domain.model.BasePet;
 import org.vetclinic.domain.model.Pet;
 import org.vetclinic.domain.model.PetGroup;
 import org.vetclinic.service.PetGroupService;
@@ -29,6 +30,11 @@ public class PetsController
     @GetMapping("/pet-group")
     public List<PetGroup> getAllPetGroupsForUser(@RequestParam String email){
         return petGroupService.getPetGroupsForUser(email);
+    }
+
+    @GetMapping("/base-pet")
+    public BasePet getPetForEmailAndName(@RequestParam String email, @RequestParam String name){
+        return petService.getBasePetByOwnerAndName(email, name);
     }
 
     @PostMapping("/new-pet")

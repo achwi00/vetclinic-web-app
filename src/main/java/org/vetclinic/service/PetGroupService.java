@@ -9,6 +9,7 @@ import org.vetclinic.domain.model.User;
 import org.vetclinic.domain.repository.PetGroupRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -18,6 +19,18 @@ public class PetGroupService
     private PetGroupRepository petGroupRepository;
     private UserService userService;
 
+    public PetGroup getPetGroupByOwnerAndName(User owner, String name){
+        PetGroup pet = null;
+        try{
+            Optional<PetGroup> optionalPet = petGroupRepository.findPetGroupByOwnerAndName(owner, name);
+            if(optionalPet.isPresent()){
+                pet = optionalPet.get();
+            }
+        }catch (Exception e){
+            log.info("Pet not found for provided user and name.");
+        }
+        return pet;
+    }
     public List<PetGroup> getPetGroupsForUser(String email){
         try{
             User owner = userService.getUserByEmail(email);
