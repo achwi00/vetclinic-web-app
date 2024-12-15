@@ -3,7 +3,7 @@ package org.vetclinic.domain.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.time.Instant;
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -21,7 +21,7 @@ public class Surgery
     @ManyToOne
     private BasePet basePet;
 
-    private Instant date;
+    private LocalDate date;
 
     @Column(nullable = false)
     private int petsOperated;

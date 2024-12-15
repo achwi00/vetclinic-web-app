@@ -4,8 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.Instant;
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -21,8 +20,8 @@ public class Treatment
     private BasePet pet;
 
     @Column(nullable = false)
-    private Instant startDate;
-    private Instant endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
 
     @ManyToOne
     private Medication medication;
