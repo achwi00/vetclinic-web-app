@@ -9,7 +9,9 @@ import org.vetclinic.domain.model.User;
 import org.vetclinic.domain.model.Visit;
 import org.vetclinic.domain.repository.VisitRepository;
 
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -77,6 +79,22 @@ public class VisitService
             return true;
         }catch (Exception e){
             return false;
+        }
+    }
+
+    public List<Visit> findAllVisitsForTodayForVet(String email){
+        try{
+            User vet = userService.getUserByEmail(email);
+            if(vet == null){
+                throw new EntityNotFoundException("Vet not found for email");
+            }
+            log.info("email: " + vet.getEmail());
+            LocalTime endTime = LocalTime.now().plusHours(2);
+            log.info("endTime: " + endTime);
+            return visitRepository.findAllByVetAndDateAndEndTimeBefore(vet, LocalDate.now(), endTime);
+        }catch (Exception e){
+            log.info("Exception during findAllVisitsForTodayForVet: " + e.getMessage());
+            return List.of();
         }
     }
 

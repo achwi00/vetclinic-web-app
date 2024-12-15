@@ -52,4 +52,9 @@ public class VisitController
         }
         return msg;
     }
+
+    @GetMapping("/vet/incoming")
+    public List<Visit> getAllVisitsForVetForToday(@RequestParam String email){
+        return visitService.findAllVisitsForTodayForVet(email);
+    }
 }

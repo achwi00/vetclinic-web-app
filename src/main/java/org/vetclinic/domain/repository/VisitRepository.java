@@ -5,6 +5,7 @@ import org.vetclinic.domain.model.User;
 import org.vetclinic.domain.model.Visit;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 public interface VisitRepository extends JpaRepository<Visit, Long>
@@ -13,4 +14,5 @@ public interface VisitRepository extends JpaRepository<Visit, Long>
 
     List<Visit> findAllByDateBetweenAndStatus(LocalDate startDate, LocalDate endDate, Visit.VisitStatus status);
     List<Visit> findAllByClientAndStatus(User client, Visit.VisitStatus status);
+    List<Visit> findAllByVetAndDateAndEndTimeBefore(User vet, LocalDate date, LocalTime endTime);
 }
