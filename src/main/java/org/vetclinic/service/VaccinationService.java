@@ -25,7 +25,7 @@ public class VaccinationService
         return vaccinationRepository.getAllByBasePet_IdAndVaccinationStatus(basePetId, Vaccination.VaccinationStatus.DONE);
     }
 
-    public boolean createNewVaccination(Long visitId, Long medicationId, int numOfPets){
+    public boolean createNewVaccination(Long visitId, String medicationName, int numOfPets){
         try{
             //get the visit
             Optional<Visit> optionalVisit = visitRepository.getVisitById(visitId);
@@ -34,9 +34,9 @@ public class VaccinationService
             }
             Visit visit = optionalVisit.get();
             //check if medication exists
-            Medication medication = medicationRepository.getMedicationById(medicationId);
+            Medication medication = medicationRepository.getMedicationByName(medicationName);
             if(medication == null){
-                throw new IllegalArgumentException("Medication not found for id: " + medicationId);
+                throw new IllegalArgumentException("Medication not found for name: " + medicationName);
             }
             vaccinationRepository.save(new Vaccination(null, medication, visit, visit.getDate(), true, visit.getBasePet(), Vaccination.VaccinationStatus.DONE, numOfPets));
             return true;

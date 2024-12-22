@@ -28,7 +28,7 @@ public class VaccinationController
     public ResponseEntity<String> addNewVaccination(@RequestBody VaccinationDto request){
         boolean success = vaccinationService.createNewVaccination(
                 request.getVisitId(),
-                request.getMedicationId(),
+                request.getMedicationName(),
                 request.getNumOfPets()
         );
         if (success) {

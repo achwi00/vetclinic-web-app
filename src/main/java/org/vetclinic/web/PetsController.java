@@ -9,10 +9,8 @@ import org.vetclinic.api.dto.PetRequest;
 import org.vetclinic.domain.model.BasePet;
 import org.vetclinic.domain.model.Pet;
 import org.vetclinic.domain.model.PetGroup;
-import org.vetclinic.domain.model.Vaccination;
 import org.vetclinic.service.PetGroupService;
 import org.vetclinic.service.PetService;
-import org.vetclinic.service.VaccinationService;
 
 import java.util.List;
 

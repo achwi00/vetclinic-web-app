@@ -13,7 +13,4 @@ public class Medication
 
     @Column(nullable = false)
     private String name;
-    //dose?
-    @Column(nullable = false)
-    private String batch;
 }
