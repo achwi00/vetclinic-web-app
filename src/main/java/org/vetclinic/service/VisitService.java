@@ -4,15 +4,13 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.vetclinic.domain.model.Pet;
-import org.vetclinic.domain.model.User;
-import org.vetclinic.domain.model.Visit;
+import org.vetclinic.domain.model.*;
 import org.vetclinic.domain.repository.VisitRepository;
 
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @AllArgsConstructor
@@ -22,6 +20,7 @@ public class VisitService
     private final VisitRepository visitRepository;
     private final UserService userService;
     private final PetService petService;
+    private final PetGroupService petGroupService;
 
     public List<Visit> findAllVisitsInBetween(LocalDate startDate, LocalDate endDate){
         return visitRepository.findAllByDateBetweenAndStatus(startDate, endDate, Visit.VisitStatus.FREE);
@@ -99,4 +98,37 @@ public class VisitService
         }
     }
 
+    public boolean createCustomVisit(String userEmail, String petName, LocalDate date, LocalTime startTime, LocalTime endTime, String vetEmail){
+        try{
+            validateUserRole(userEmail, "CLIENT", userEmail + " is not a client");
+            validateUserRole(vetEmail, "VET", vetEmail + " is not a vet");
+            //get the users
+            User client = userService.getUserByEmail(userEmail);
+            User vet = userService.getUserByEmail(vetEmail);
+
+            BasePet basePet = findPetOrGroup(client, petName);
+            if (basePet == null) {
+                throw new EntityNotFoundException("BasePet not found for client");
+            }
+
+            visitRepository.save(new Visit(null, date, startTime, endTime, client, vet, basePet, Visit.VisitStatus.UPCOMING));
+            return true;
+        }catch(Exception e){
+            log.info("Error saving vaccination: " + e.getMessage());
+            return false;
+        }
+    }
+    private void validateUserRole(String email, String expectedRole, String errorMessage) {
+        String role = userService.getUserRole(email);
+        if (!Objects.equals(role, expectedRole)) {
+            throw new IllegalArgumentException(errorMessage);
+        }
+    }
+    private BasePet findPetOrGroup(User client, String petName) {
+        BasePet pet = petService.getPetByOwnerAndName(client, petName);
+        if (pet != null) {
+            return pet;
+        }
+        return petGroupService.getPetGroupByOwnerAndName(client, petName);
+    }
 }

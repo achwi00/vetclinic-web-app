@@ -2,8 +2,12 @@ package org.vetclinic.web;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.vetclinic.api.dto.BookVisitRequest;
+import org.vetclinic.api.dto.CustomVisitDto;
+import org.vetclinic.api.dto.VaccinationDto;
 import org.vetclinic.domain.model.Visit;
 import org.vetclinic.service.VisitService;
 
@@ -57,4 +61,23 @@ public class VisitController
     public List<Visit> getAllVisitsForVetForToday(@RequestParam String email){
         return visitService.findAllVisitsForTodayForVet(email);
     }
+
+    @PostMapping("custom-visit")
+    public ResponseEntity<String> newCustomVisit(@RequestBody CustomVisitDto request){
+        boolean success = visitService.createCustomVisit(
+                request.getUserEmail(),
+                request.getPetName(),
+                request.getDate(),
+                request.getStartTime(),
+                request.getEndTime(),
+                request.getVetEmail()
+
+        );
+        if (success) {
+            return ResponseEntity.ok("Custom visit added successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to add custom visit");
+        }
+    }
+
 }
