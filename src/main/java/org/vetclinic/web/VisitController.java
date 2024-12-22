@@ -64,6 +64,7 @@ public class VisitController
 
     @PostMapping("custom-visit")
     public ResponseEntity<String> newCustomVisit(@RequestBody CustomVisitDto request){
+        log.info(request.toString());
         boolean success = visitService.createCustomVisit(
                 request.getUserEmail(),
                 request.getPetName(),

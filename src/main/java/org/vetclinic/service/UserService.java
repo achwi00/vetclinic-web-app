@@ -48,4 +48,7 @@ public class UserService
        return role;
     }
 
+    public List<String> getAllVetEmails(){
+        return userRepository.findAllEmailByRole(User.Role.VET);
+    }
 }

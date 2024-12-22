@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.vetclinic.service.UserService;
 
+import java.util.List;
+
 
 @RestController
 @Slf4j
@@ -28,5 +30,9 @@ public class UserController {
         return userService.getUserRole(uMail);
     }
 
+    @GetMapping("/vet-emails")
+    public List<String> allVetEmails(){
+        return userService.getAllVetEmails();
+    }
 
 }
