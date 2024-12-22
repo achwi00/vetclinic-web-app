@@ -8,6 +8,5 @@ import java.util.List;
 
 public interface VaccinationRepository extends JpaRepository<Vaccination, Long>
 {
-    //List<Vaccination> getAllByBasePetAndVaccinationStatus(BasePet basePet, Vaccination.VaccinationStatus status);
     List<Vaccination> getAllByBasePet_IdAndVaccinationStatus(Long basePetId, Vaccination.VaccinationStatus status);
 }
