@@ -89,9 +89,10 @@ public class VisitService
                 throw new EntityNotFoundException("Vet not found for email");
             }
             log.info("email: " + vet.getEmail());
-            LocalTime endTime = LocalTime.now().plusHours(2);
+            log.info("date: " + LocalDate.now());
+            LocalTime endTime = LocalTime.now().minusHours(2);
             log.info("endTime: " + endTime);
-            return visitRepository.findAllByVetAndDateAndEndTimeBefore(vet, LocalDate.now(), endTime);
+            return visitRepository.findAllByVetAndDateAndEndTimeAfter(vet, LocalDate.now(), endTime);
         }catch (Exception e){
             log.info("Exception during findAllVisitsForTodayForVet: " + e.getMessage());
             return List.of();
