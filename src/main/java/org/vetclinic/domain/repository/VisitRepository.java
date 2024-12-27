@@ -17,4 +17,6 @@ public interface VisitRepository extends JpaRepository<Visit, Long>
     List<Visit> findAllByClientAndStatus(User client, Visit.VisitStatus status);
     List<Visit> findAllByVetAndDateAndEndTimeAfter(User vet, LocalDate date, LocalTime endTime);
     Optional<Visit> getVisitById(Long id);
+    List<Visit> findAllByVetAndStatus(User vet, Visit.VisitStatus status);
+    List<Visit> findAllByStatus(Visit.VisitStatus status);
 }

@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.vetclinic.api.dto.BookVisitRequest;
 import org.vetclinic.api.dto.CustomVisitDto;
-import org.vetclinic.api.dto.VaccinationDto;
+import org.vetclinic.api.dto.VisitDto;
 import org.vetclinic.domain.model.Visit;
 import org.vetclinic.service.VisitService;
 
@@ -80,5 +80,16 @@ public class VisitController
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to add custom visit");
         }
     }
+
+    @GetMapping("/vet/all-incoming")
+    public List<VisitDto> getAllIncomingVisitDtosForVet(@RequestParam String email) {
+        return visitService.getAllVisitDtosForVet(email);
+    }
+
+    @GetMapping("/all-incoming")
+    public List<VisitDto> getAllIncomingVisitDtos() {
+        return visitService.getAllVisitDtos();
+    }
+
 
 }

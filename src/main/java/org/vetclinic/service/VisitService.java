@@ -4,6 +4,9 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.vetclinic.api.dto.VisitDto;
+import org.vetclinic.api.mapper.GeneralVisitMapper;
+import org.vetclinic.api.mapper.VisitMapper;
 import org.vetclinic.domain.model.*;
 import org.vetclinic.domain.repository.VisitRepository;
 
@@ -11,6 +14,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -130,5 +134,33 @@ public class VisitService
             return pet;
         }
         return petGroupService.getPetGroupByOwnerAndName(client, petName);
+    }
+
+    public List<VisitDto> getAllVisitDtosForVet(String email) {
+        try{
+            User vet = userService.getUserByEmail(email);
+            if(vet == null){
+                throw new EntityNotFoundException("Vet not found for email" + email);
+            }
+            List<Visit> visits = visitRepository.findAllByVetAndStatus(vet, Visit.VisitStatus.UPCOMING);
+            return visits.stream()
+                    .map(VisitMapper::toDto)
+                    .collect(Collectors.toList());
+        }catch (Exception e){
+            log.info(e.getMessage());
+            return List.of();
+        }
+    }
+
+    public List<VisitDto> getAllVisitDtos() {
+        try{
+            List<Visit> visits = visitRepository.findAllByStatus(Visit.VisitStatus.UPCOMING);
+            return visits.stream()
+                    .map(GeneralVisitMapper::toDto)
+                    .collect(Collectors.toList());
+        }catch (Exception e){
+            log.info(e.getMessage());
+            return List.of();
+        }
     }
 }
