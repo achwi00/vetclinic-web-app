@@ -15,7 +15,7 @@ public class GeneralVisitMapper
                 : start.plusMinutes(30); // Default duration if endTime is not provided
 
         String title = (visit.getClient() != null)
-                ? "C: " +  visit.getClient().getName() + " " + visit.getClient().getSurname() + ", Dr. " + visit.getVet().getName() + " " + visit.getVet().getSurname()
+                ? "Dr. " + visit.getVet().getName() + " " + visit.getVet().getSurname() + ", C: " +  visit.getClient().getName() + " " + visit.getClient().getSurname()
                 : "No Client";
 
         return new VisitDto(
