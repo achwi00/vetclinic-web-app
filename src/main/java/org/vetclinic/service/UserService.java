@@ -48,6 +48,21 @@ public class UserService
        return role;
     }
 
+    public String getNameOfUser(String email){
+        User user;
+        String name = null;
+        try{
+            Optional<User> optionalUser = userRepository.findUserByEmail(email);
+            if(optionalUser.isPresent()) {
+                user = optionalUser.get();
+                name = user.getName();
+            }
+        }catch (Exception e){
+            log.info("User not found for given email");
+        }
+        return name;
+    }
+
     public List<String> getAllVetEmails(){
         return userRepository.findAllEmailByRole(User.Role.VET);
     }

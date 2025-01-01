@@ -33,6 +33,12 @@ public class UserController {
         return userService.getUserRole(uMail);
     }
 
+    @GetMapping("/name")
+    public String getName(@RequestParam String uMail){
+        log.info("mail: " + uMail);
+        return userService.getNameOfUser(uMail);
+    }
+
     @GetMapping("/vet-emails")
     public List<String> allVetEmails(){
         return userService.getAllVetEmails();
