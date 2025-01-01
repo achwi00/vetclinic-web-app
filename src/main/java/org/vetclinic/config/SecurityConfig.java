@@ -21,6 +21,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.vetclinic.service.CustomUserDetailsService;
 
 import static javax.management.Query.and;
@@ -47,6 +48,12 @@ public class SecurityConfig {
                 .formLogin(login -> login.loginPage("http://localhost:3000/login").permitAll()
                         .loginProcessingUrl("/login")
                         .successHandler((request, response, authentication) -> {
+                            response.setStatus(HttpServletResponse.SC_OK);
+                        })
+                )
+                .logout(logout -> logout
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/dashboard/**", "POST")) // Matches all POST requests under /dashboard
+                        .logoutSuccessHandler((request, response, authentication) -> {
                             response.setStatus(HttpServletResponse.SC_OK);
                         })
                 )
