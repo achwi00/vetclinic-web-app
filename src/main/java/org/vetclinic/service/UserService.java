@@ -2,6 +2,7 @@ package org.vetclinic.service;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.vetclinic.domain.model.User;
 import org.vetclinic.domain.repository.UserRepository;
@@ -15,6 +16,7 @@ import java.util.Optional;
 public class UserService
 {
     private UserRepository userRepository;
+    private PasswordEncoder passwordEncoder;
 
     public List<User> getAllUsers(){
         return userRepository.findAll();
@@ -66,4 +68,28 @@ public class UserService
     public List<String> getAllVetEmails(){
         return userRepository.findAllEmailByRole(User.Role.VET);
     }
+
+    public boolean addNewClientAccount(String email, String name, String surname, String password){
+        try{
+            if(userRepository.existsByEmail(email)){
+                throw new Exception("User account already exists for this email!");
+            }
+            User user = new User(
+                    null,
+                    email,
+                    name,
+                    surname,
+                    passwordEncoder.encode(password),
+                    User.Role.CLIENT
+                    );
+
+            userRepository.save(user);
+            return true;
+        }
+        catch(Exception e){
+            log.info("Error creating new client account, " + e.getMessage());
+            return false;
+        }
+    }
+
 }

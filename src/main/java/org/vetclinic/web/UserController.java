@@ -4,8 +4,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.vetclinic.api.dto.ClientDto;
 import org.vetclinic.service.UserService;
 
 import java.util.List;
@@ -53,6 +56,16 @@ public class UserController {
             request.getSession().invalidate();
         }
         response.setStatus(HttpServletResponse.SC_OK);
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<String> createNewUser(@RequestBody ClientDto clientDto){
+        boolean success = userService.addNewClientAccount(clientDto.getEmail(), clientDto.getName(), clientDto.getSurname(), clientDto.getPassword());
+        if (success) {
+            return ResponseEntity.ok("Client account added successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to add new client account.");
+        }
     }
 
 }
